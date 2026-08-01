@@ -2,6 +2,7 @@
   "name": "kakeibo-bot",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
   "description": "割り勘家計簿LINE Bot",
   "main": "src/server.js",
   "scripts": {

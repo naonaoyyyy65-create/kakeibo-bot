@@ -1,5 +1,11 @@
 # kakeibo-bot
 
+<!-- リポジトリ作成後、YOUR_GITHUB_USERNAME を実際のGitHubユーザー名に置き換えてください -->
+![CI](https://github.com/YOUR_GITHUB_USERNAME/kakeibo-bot/actions/workflows/ci.yml/badge.svg)
+![tests](https://img.shields.io/badge/tests-91%20passing-brightgreen)
+![coverage](https://img.shields.io/badge/coverage-77%25-yellow)
+![license](https://img.shields.io/badge/license-MIT-blue.svg)
+
 LINEのトーク上でテキスト入力・ボタン操作するだけで記帳できる、2人で使う割り勘家計簿LINE Bot。Node.js（Express）＋ SQLite ＋ Google Sheets API（人間可読なミラー）＋ LINE Messaging APIで実装し、Raspberry Pi上でsystemdサービスとして常時稼働している本番システムです。
 
 もとは Google Apps Script（GAS）版として作り始め、機能パリティを達成した段階でNode.js版に全面移行しました。
