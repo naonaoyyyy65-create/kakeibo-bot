@@ -185,8 +185,13 @@ test('monthlyReminder: 送信先が0件なら何もせず（例外を投げず�
 });
 
 test('monthlyReminder: 対象月が無ければ何もせず終了する', async () => {
-  // lastMonthYm（実行時の先月）まで全て支払済扱いにし、collectUnpaidMonthsが空を返す状況を再現
-  settledMonths = ['2026-05', '2026-06'];
+  // lastMonthYm（実行時の先月）まで全て支払済扱いにし、collectUnpaidMonthsが空を返す状況を再現。
+  // 実行日に依存せず常に成立するよう、対象範囲を実際のlastMonthYm算出ロジックと同じ式で動的に求める
+  // （固定の年月をハードコードすると、テスト実行日が進んだ際に不要な月が対象外から漏れて失敗するため）。
+  const now = new Date();
+  const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const lastMonthYm = `${lastMonth.getFullYear()}-${String(lastMonth.getMonth() + 1).padStart(2, '0')}`;
+  settledMonths = TITLES.filter((t) => /^\d{4}-\d{2}$/.test(t) && t <= lastMonthYm);
   pushedTo.length = 0;
   await monthlyReminder(true);
   assert.deepEqual(pushedTo, []);

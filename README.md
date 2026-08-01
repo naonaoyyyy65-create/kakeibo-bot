@@ -101,10 +101,18 @@ CREATE TABLE users (user_id TEXT PRIMARY KEY, last_used_at TEXT NOT NULL, use_co
 6. `npm test` でユニットテストを実行（本番データには一切アクセスしない設計）
 7. `node src/server.js` でローカル起動、または`deploy/`のsystemdユニットファイルを参考にサーバーへ配置
 
-## テスト
+## テスト・静的解析
 
 ```
-npm test
+npm test              # ユニットテスト
+npm run test:coverage # カバレッジ計測付き
+npm run lint          # ESLint
 ```
 
 `node:test`を使用。`dbService.js`は`better-sqlite3`の`:memory:`DBに対して直接テストし、外部APIに依存する層（`sheetsService.js`/`lineService.js`）は`mock.module()`でモック。テストは本番データを含むDBファイルに一切アクセスしない設計を徹底しています。
+
+- テスト: 91件 pass
+- カバレッジ（行）: 全体76.96%（`config.js`/`quickInput.js`/`reminderStore.js`/`state.js`は100%、Flex Message構築等のUI層は分岐が多く手薄）
+- ESLint: 0 errors
+
+※`better-sqlite3`はネイティブモジュールのため、`npm install`にはC++ビルドツール（Windowsの場合はVisual Studio Build Tools、Linux/Macの場合はビルド用のヘッダ類）が必要です。
