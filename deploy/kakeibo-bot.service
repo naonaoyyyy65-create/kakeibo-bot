@@ -1,0 +1,15 @@
+[Unit]
+Description=Kakeibo LINE Bot (Node.js)
+After=network.target
+
+[Service]
+Type=simple
+User=<user>
+WorkingDirectory=/home/<user>/apps/kakeibo-bot
+ExecStart=/usr/bin/node src/server.js
+Restart=on-failure
+RestartSec=5
+EnvironmentFile=/home/<user>/apps/kakeibo-bot/.env
+
+[Install]
+WantedBy=multi-user.target

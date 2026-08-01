@@ -1,0 +1,24 @@
+{
+  "name": "kakeibo-bot",
+  "version": "0.1.0",
+  "private": true,
+  "description": "家計簿LINE Bot（GAS版からのNode.js移行・雛形）",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "reminder": "node src/reminder.js",
+    "backup": "node src/backup.js",
+    "test": "node --experimental-test-module-mocks --test"
+  },
+  "dependencies": {
+    "@line/bot-sdk": "^11.2.0",
+    "better-sqlite3": "^13.0.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "googleapis": "latest"
+  },
+  "overrides": {
+    "brace-expansion": "^5.0.8"
+  }
+}
