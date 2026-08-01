@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>kakeibo-bot — 画面デモ</title>
+<style>
+  :root{
+    --canvas:#f3f2ee;
+    --ink:#2c3e50;
+    --muted:#7f8c8d;
+    --bezel:#1c1c1e;
+    --chat-bg:#eef1f0;
+    --accent:#1abc9c;
+    --accent-dark:#16a085;
+    --white:#ffffff;
+    --border:#dfe4e2;
+    --payerC:#27ae60;
+    --payerA:#e74c3c;
+    --info:#3498db;
+    --warning:#f39c12;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:var(--canvas);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",sans-serif;color:var(--ink);}
+  body{padding:40px 24px;}
+  .gallery{display:flex;gap:36px;justify-content:center;flex-wrap:wrap;max-width:800px;margin:0 auto;}
+  figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:12px;}
+  figcaption{font-size:13px;font-weight:600;color:var(--muted);letter-spacing:.02em;}
+
+  .phone{width:320px;border-radius:36px;background:var(--bezel);padding:10px;box-shadow:0 20px 40px rgba(0,0,0,.18);}
+  .screen{background:var(--chat-bg);border-radius:26px;overflow:hidden;}
+  .statusbar{display:flex;justify-content:space-between;align-items:center;padding:8px 20px 2px;font-size:12px;font-weight:600;color:var(--ink);}
+  .chatheader{display:flex;align-items:center;gap:10px;padding:8px 16px 12px;}
+  .chatheader .avatar{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;}
+  .chatheader .name{font-size:14px;font-weight:700;}
+  .chat{padding:6px 12px 16px;display:flex;flex-direction:column;gap:10px;}
+
+  .bubble{width:100%;border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.08);background:var(--white);}
+  .bubble-header{padding:14px 16px 12px;color:#fff;background:var(--accent);}
+  .bubble-header .title{font-size:16px;font-weight:700;}
+  .bubble-body{padding:14px 14px 16px;background:var(--chat-bg);display:flex;flex-direction:column;gap:8px;}
+
+  .row{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:8px;padding:9px 12px;font-size:13px;}
+  .row .label{color:var(--muted);font-size:11px;}
+  .row .value{font-weight:700;}
+  .payer-tag{border-radius:6px;padding:2px 8px;font-size:10.5px;color:#fff;font-weight:700;}
+
+  .status-badge{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 12px;font-size:11.5px;font-weight:700;align-self:flex-start;}
+  .settlement-box{background:#fff3e0;border-radius:8px;padding:10px 12px;font-size:13px;color:#d35400;font-weight:700;}
+
+  .footer{display:flex;gap:8px;padding:12px 14px 14px;background:#fff;}
+  .btn{flex:1;border-radius:8px;padding:10px;text-align:center;font-size:13px;font-weight:700;}
+  .btn.primary{background:var(--accent);color:#fff;}
+  .btn.secondary{background:#fff;border:1px solid var(--border);color:var(--ink);}
+
+  .user-bubble{align-self:flex-end;background:var(--accent);color:#fff;border-radius:14px 14px 4px 14px;box-shadow:none;padding:10px 14px;font-size:13px;}
+</style>
+</head>
+<body>
+<div class="gallery">
+
+  <figure>
+    <figcaption>クイック入力の確認</figcaption>
+    <div class="phone"><div class="screen">
+      <div class="statusbar"><span>9:41</span><span>●●●</span></div>
+      <div class="chatheader"><div class="avatar">💰</div><div class="name">家計簿Bot</div></div>
+      <div class="chat">
+        <div class="bubble user-bubble">スーパー 2500 c</div>
+        <div class="bubble">
+          <div class="bubble-header"><div class="title">✅ 登録しました</div></div>
+          <div class="bubble-body">
+            <div class="row"><span class="label">日付</span><span class="value">2026/08/03</span></div>
+            <div class="row"><span class="label">項目</span><span class="value">スーパー</span></div>
+            <div class="row"><span class="label">金額</span><span class="value">¥2,500</span></div>
+            <div class="row"><span class="label">払った人</span><span class="payer-tag" style="background:var(--payerC);">👤 c</span></div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </figure>
+
+  <figure>
+    <figcaption>月次確認・精算</figcaption>
+    <div class="phone"><div class="screen">
+      <div class="statusbar"><span>9:41</span><span>●●●</span></div>
+      <div class="chatheader"><div class="avatar">💰</div><div class="name">家計簿Bot</div></div>
+      <div class="chat">
+        <div class="bubble">
+          <div class="bubble-header"><div class="title">📊 2026年08月</div></div>
+          <div class="bubble-body">
+            <span class="status-badge" style="background:#eaf4fc;color:var(--info);">✅ 確定済</span>
+            <div class="row"><span class="label">合計</span><span class="value">¥18,400</span></div>
+            <div class="row"><span class="label">件数</span><span class="value">6件</span></div>
+            <div class="settlement-box">🌸 a → 👤 c　¥3,200</div>
+          </div>
+          <div class="footer">
+            <div class="btn secondary">明細を見る</div>
+            <div class="btn primary">支払済にする</div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </figure>
+
+</div>
+</body>
+</html>
