@@ -2,14 +2,16 @@
   "name": "kakeibo-bot",
   "version": "0.1.0",
   "private": true,
-  "description": "家計簿LINE Bot（GAS版からのNode.js移行・雛形）",
+  "description": "割り勘家計簿LINE Bot",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
     "reminder": "node src/reminder.js",
     "backup": "node src/backup.js",
-    "test": "node --experimental-test-module-mocks --test"
+    "test": "node --experimental-test-module-mocks --test",
+    "test:coverage": "node --experimental-test-module-mocks --test --experimental-test-coverage",
+    "lint": "eslint ."
   },
   "dependencies": {
     "@line/bot-sdk": "^11.2.0",
@@ -20,5 +22,9 @@
   },
   "overrides": {
     "brace-expansion": "^5.0.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.0"
   }
 }

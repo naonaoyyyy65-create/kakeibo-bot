@@ -53,7 +53,6 @@ const DB_DEFAULTS = {
   upsertUser: () => undefined,
   getAllUserIds: () => [],
 };
-const DB_METHODS = Object.keys(DB_DEFAULTS);
 // sheetsMirrorService.jsは実装（sheetsServiceへの実際のミラー処理）を素通りさせず、
 // webhookHandlerが正しい引数で呼んでいるかだけを検証する（ミラー自体のロジックは
 // sheetsMirrorService専用のテストで担保する想定）。

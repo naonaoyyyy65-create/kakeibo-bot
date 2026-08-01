@@ -13,7 +13,6 @@
 const { client } = require('./lineService');
 const { getState, setState, clearState } = require('./state');
 const { parseQuickInput, toHalfWidth } = require('./quickInput');
-const sheets = require('./sheetsService');
 const db = require('./dbService');
 const mirror = require('./sheetsMirrorService');
 const flex = require('./flexBuilders');
