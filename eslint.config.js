@@ -1,6 +1,7 @@
 const js = require('@eslint/js');
 
 module.exports = [
+  { ignores: ['docs/api/**'] },
   js.configs.recommended,
   {
     languageOptions: {

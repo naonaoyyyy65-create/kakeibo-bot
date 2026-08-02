@@ -1,0 +1,13 @@
+{
+  "source": {
+    "include": ["src/dbService.js", "src/flexBuilders.js"],
+    "includePattern": ".js$"
+  },
+  "opts": {
+    "destination": "docs/api",
+    "readme": "README.md"
+  },
+  "templates": {
+    "cleverLinks": true
+  }
+}

@@ -497,7 +497,7 @@ function buildMonthSummary(ym, stats, settlement, status) {
 // ============================================================
 
 /**
- * @param {{id:number,date:string,subject:string,price:number,payer:string}[]} entries
+ * @param {Array.<{id:number,date:string,subject:string,price:number,payer:string}>} entries
  *   2026-07-30〜、DB主体化に伴い物理行番号(i+2)ではなくentries.idをpostbackに埋め込む
  *   （行番号は日次ソートcron等で不安定なため、DBの主キーで行を特定する）。
  */
@@ -553,7 +553,7 @@ function buildEditConfirm(column, currentText, newText) {
 // ============================================================
 
 /**
- * @param {{id:number,date:string,subject:string,price:number,payer:string}[]} entries
+ * @param {Array.<{id:number,date:string,subject:string,price:number,payer:string}>} entries
  *   buildAskRowEditと同じ理由でentries.idをpostbackに埋め込む。
  */
 function buildDeleteRowList(ym, entries) {

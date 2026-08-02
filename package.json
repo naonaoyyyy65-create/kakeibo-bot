@@ -14,7 +14,8 @@
     "test": "node --experimental-test-module-mocks --test",
     "test:coverage": "node --experimental-test-module-mocks --test --experimental-test-coverage",
     "lint": "eslint .",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "docs": "jsdoc -c jsdoc.json"
   },
   "dependencies": {
     "@apollo/server": "^5.5.1",
@@ -34,6 +35,7 @@
     "@types/express": "^5.0.6",
     "@types/node": "^26.1.2",
     "eslint": "^10.8.0",
+    "jsdoc": "^4.0.5",
     "supertest": "^7.2.2",
     "typescript": "^7.0.2"
   }

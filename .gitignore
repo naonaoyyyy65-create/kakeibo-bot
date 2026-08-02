@@ -6,3 +6,5 @@ backup/
 *.log
 *.db
 coverage/
+# jsdocの生成物（`npm run docs`で再生成可能、ビルド成果物のためコミット対象外）
+docs/api/
