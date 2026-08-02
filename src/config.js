@@ -121,6 +121,8 @@ module.exports = {
   GDRIVE_OAUTH_CLIENT_SECRET: process.env.GDRIVE_OAUTH_CLIENT_SECRET || '',
   GDRIVE_OAUTH_REFRESH_TOKEN: process.env.GDRIVE_OAUTH_REFRESH_TOKEN || '',
   PORT: process.env.PORT || 3000,
+  // 読み取り専用GraphQL API（graphqlServer.js）のポート。本体（LINE Webhook）とは別プロセス・別ポートで動かす
+  GRAPHQL_PORT: process.env.GRAPHQL_PORT || 4000,
   // 「支払済」確認済みの月次シート一覧の永続化先（reminder.jsが以後チェックをスキップするために使用）
   SETTLED_MONTHS_FILE_PATH: process.env.SETTLED_MONTHS_FILE_PATH || './data/settledMonths.json',
   // 主データストア（SQLite）のファイルパス（2026-07-30〜、DB主体化）

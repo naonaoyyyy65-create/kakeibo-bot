@@ -115,6 +115,17 @@ function createDbService(filePath) {
     }
   }
 
+  /**
+   * データが存在する月（yyyy-MM）の一覧を古い順に返す（GraphQL読み取りAPIの`months`クエリ用）。
+   * @returns {string[]}
+   */
+  function listMonths() {
+    return getDb()
+      .prepare('SELECT DISTINCT ym FROM entries WHERE deleted_at IS NULL ORDER BY ym')
+      .all()
+      .map((row) => row.ym);
+  }
+
   function getMonthlyEntries(ym) {
     const rows = getDb()
       .prepare(
@@ -219,6 +230,7 @@ function createDbService(filePath) {
     getMonthlyStatus,
     setMonthlyStatus,
     assertMonthEditable,
+    listMonths,
     getMonthlyEntries,
     getEntryById,
     insertEntry,

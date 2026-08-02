@@ -8,6 +8,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
+    "graphql": "node src/graphqlServer.js",
     "reminder": "node src/reminder.js",
     "backup": "node src/backup.js",
     "test": "node --experimental-test-module-mocks --test",
@@ -16,11 +17,13 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@apollo/server": "^5.5.1",
     "@line/bot-sdk": "^11.2.0",
     "better-sqlite3": "^13.0.2",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "googleapis": "latest"
+    "googleapis": "latest",
+    "graphql": "^16.14.2"
   },
   "overrides": {
     "brace-expansion": "^5.0.8"

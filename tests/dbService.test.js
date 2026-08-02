@@ -49,6 +49,21 @@ test('insertEntry: ロックされた月には追加できない', () => {
   assert.throws(() => db.insertEntry({ date: '2026-07-10', subject: 'x', price: 100, payer: 'c' }));
 });
 
+test('listMonths: データが存在する月をym昇順・重複無しで返す', () => {
+  const db = freshDb();
+  db.insertEntry({ date: '2026-07-20', subject: 'b', price: 100, payer: 'c' });
+  db.insertEntry({ date: '2026-07-05', subject: 'a', price: 200, payer: 'a' });
+  db.insertEntry({ date: '2026-06-01', subject: 'c', price: 300, payer: 'c' });
+  assert.deepEqual(db.listMonths(), ['2026-06', '2026-07']);
+});
+
+test('listMonths: ソフトデリート済みの明細しかない月は含まれない', () => {
+  const db = freshDb();
+  const entry = db.insertEntry({ date: '2026-06-01', subject: 'x', price: 100, payer: 'c' });
+  db.deleteEntryById('2026-06', entry.id);
+  assert.deepEqual(db.listMonths(), []);
+});
+
 test('getMonthlyEntries: 日付順（同日はid順）に並ぶ', () => {
   const db = freshDb();
   db.insertEntry({ date: '2026-07-20', subject: 'b', price: 100, payer: 'c' });
