@@ -9,6 +9,24 @@
  *   デフォルトインスタンスをexportしつつ、テストは`createDbService(':memory:')`で完全に独立させる。
  * - assertMonthEditable等のロック判定はDBのmonth_statusが唯一の情報源。
  */
+
+/**
+ * @typedef {Object} Entry
+ * @property {number} id
+ * @property {string} ym
+ * @property {string} date
+ * @property {string} subject
+ * @property {number} price
+ * @property {'c'|'a'} payer
+ */
+
+/**
+ * @typedef {Object} EntryInput
+ * @property {string} date
+ * @property {string} subject
+ * @property {number} price
+ * @property {'c'|'a'} payer
+ */
 const path = require('path');
 const Database = require('better-sqlite3');
 const config = require('./config');
@@ -61,6 +79,10 @@ function createDbService(filePath) {
     return db;
   }
 
+  /**
+   * @param {any} row
+   * @returns {Entry|undefined}
+   */
   function rowToEntry(row) {
     if (!row) return undefined;
     return {
@@ -111,6 +133,10 @@ function createDbService(filePath) {
     return rowToEntry(row);
   }
 
+  /**
+   * @param {EntryInput} entry
+   * @returns {Entry|undefined}
+   */
   function insertEntry({ date, subject, price, payer }) {
     const ym = date.slice(0, 7);
     assertMonthEditable(ym);
@@ -127,10 +153,12 @@ function createDbService(filePath) {
    * @param {string} ym 選択中の月（ロック判定に使う。dateを編集して別月に移す場合でも
    *                     このymが基準——sheetsService.updateCellの既存挙動を踏襲）
    * @param {number} id
-   * @param {object} patch 更新するフィールドのみ（date/subject/price/payer）
+   * @param {Partial<EntryInput>} patch 更新するフィールドのみ（date/subject/price/payer）
+   * @returns {Entry|undefined}
    */
   function updateEntryById(ym, id, patch) {
     assertMonthEditable(ym);
+    /** @type {Entry|undefined} */
     const existing = getDb().prepare('SELECT * FROM entries WHERE id = ? AND deleted_at IS NULL').get(id);
     if (!existing) throw new NotFoundError(`entry ${id} not found`, 'その明細は見つかりませんでした');
 
@@ -204,5 +232,4 @@ function createDbService(filePath) {
   };
 }
 
-module.exports = createDbService(config.DB_FILE_PATH);
-module.exports.createDbService = createDbService;
+module.exports = { ...createDbService(config.DB_FILE_PATH), createDbService };

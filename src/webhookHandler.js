@@ -1,3 +1,4 @@
+// @ts-nocheck -- TODO(TS移行): 段階的TypeScript導入の対象外。個別に型を付けて解除する予定
 /**
  * webhookHandler.js
  * イベントハンドラーとルーティング（GAS版 Handlers.gs / Steps.gs の移植）

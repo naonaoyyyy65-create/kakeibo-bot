@@ -12,7 +12,8 @@
     "backup": "node src/backup.js",
     "test": "node --experimental-test-module-mocks --test",
     "test:coverage": "node --experimental-test-module-mocks --test --experimental-test-coverage",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "typecheck": "tsc"
   },
   "dependencies": {
     "@line/bot-sdk": "^11.2.0",
@@ -26,6 +27,10 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
-    "eslint": "^10.8.0"
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.1.2",
+    "eslint": "^10.8.0",
+    "typescript": "^7.0.2"
   }
 }

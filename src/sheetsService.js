@@ -1,3 +1,4 @@
+// @ts-nocheck -- TODO(TS移行): 段階的TypeScript導入の対象外。個別に型を付けて解除する予定
 /**
  * sheetsService.js
  * Google Sheets API操作（GAS版 Spreadsheet.gs / Reminder.gs のユーザー管理部分の移植・簡略化）

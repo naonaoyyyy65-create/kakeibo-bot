@@ -6,6 +6,14 @@
  * Sheets APIを都度直接呼ぶ設計（sheetsService.js参照）のためキャッシュ層は持たない。
  */
 
+/**
+ * Flex Messageのコンポーネント（box/text/button/separator等）はネストごとに
+ * プロパティの組み合わせが大きく異なるため、厳密な構造型よりも「object型」で
+ * 緩く受ける方針にした（@line/bot-sdkの正式なFlex型に厳密適合させる場合、
+ * このファイルの大半のオブジェクトリテラルを書き換える必要があり労力対効果が低いため）。
+ * @typedef {Record<string, any>} FlexNode
+ */
+
 const { UI_COLORS, STATUS_STYLE, PAYER_ICON, MONTH_HEADER, PAYER_CHOICE, PAYMENT_STATUS, ACT } = require('./config');
 const { fmtDate, fmtNum, formatInTZ } = require('./utils');
 
@@ -134,6 +142,7 @@ function buildFlexMessage(title, rows = [], options = {}) {
   if (options.settlement) {
     contents.push({ type: 'separator', margin: 'lg' });
 
+    /** @type {FlexNode[]} */
     const settlementContents = [
       { type: 'text', text: '💰 精算', weight: 'bold', size: 'md', color: UI_COLORS.settlement },
       { type: 'separator', margin: 'sm', color: UI_COLORS.settlementSep },
@@ -462,6 +471,7 @@ function buildMonthSummary(ym, stats, settlement, status) {
   const [year, month] = ym.split('-');
   const style = STATUS_STYLE[status] || { color: UI_COLORS.textLight, icon: '📝' };
 
+  /** @type {FlexNode[]} */
   const rows = [
     summaryRow('合計', `¥${fmtNum(stats.total)}`, { size: 'xl', weight: 'bold', color: UI_COLORS.textDark, margin: 'none' }),
     summaryRow('件数', `${stats.count}件`),

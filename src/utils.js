@@ -1,3 +1,4 @@
+// @ts-nocheck -- TODO(TS移行): 段階的TypeScript導入の対象外。個別に型を付けて解除する予定
 /**
  * utils.js
  * ユーティリティ関数と計算処理（GAS版 Utils.gs の移植）

@@ -1,3 +1,4 @@
+// @ts-nocheck -- TODO(TS移行): 段階的TypeScript導入の対象外。個別に型を付けて解除する予定
 /**
  * get_drive_token.js
  * Google Driveへのオフサイトバックアップ用に、ユーザー自身のGoogleアカウントの

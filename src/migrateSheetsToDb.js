@@ -1,3 +1,4 @@
+// @ts-nocheck -- TODO(TS移行): 段階的TypeScript導入の対象外。個別に型を付けて解除する予定
 /**
  * migrateSheetsToDb.js
  * スプレッドシートの既存データをSQLite（dbService.js）へ一括移行する一回限りのスクリプト。

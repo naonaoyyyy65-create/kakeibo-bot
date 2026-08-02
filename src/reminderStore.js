@@ -1,3 +1,4 @@
+// @ts-nocheck -- TODO(TS移行): 段階的TypeScript導入の対象外。個別に型を付けて解除する予定
 /**
  * reminderStore.js
  * 「支払済」と確認済みの月次シートをローカルJSONに記録し、reminder.jsが以後の実行で
