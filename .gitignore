@@ -5,3 +5,4 @@ data/
 backup/
 *.log
 *.db
+coverage/
