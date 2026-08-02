@@ -54,6 +54,7 @@ LINEのトーク上でテキスト入力・ボタン操作するだけで記帳�
 - **APIクォータ対策**: 月ごとに個別リクエストする実装ではGoogle Sheets APIの分間クォータにすぐ抵触したため、`batchGet`/`batchUpdate`でまとめてリクエストする方式に変更。加えて、支払済が確定した月はローカルにキャッシュして以後のAPI呼び出し対象から除外し、リクエスト数自体を削減
 - **`@line/bot-sdk`のモック不可問題への対応**: SDKがESM/CJSデュアルパッケージ構成のため`node:test`の`mock.module()`で正しくモックできない問題に対し、実際の送信関数を引数として渡す設計に切り出してテスト可能にした（カレンダーBotと共通の設計判断）
 - **失敗の可視化**: バックアップ処理は「全体失敗」「スプレッドシート出力のみ失敗」「Driveアップロードのみ失敗」を区別してLINEへ通知し、サイレントに失敗し続けることを防止
+- **画面/フロー単位でのファイル分割**: `flexBuilders.js`（Flex Message構築）・`webhookHandler.js`（イベントルーティング）はいずれも肥大化していたため、`flex/`・`webhook/`配下へ画面/フロー単位で分割した。公開APIは変更していないため呼び出し側・テストへの影響はゼロ。分割後もあえて`flexBuilders.js`/`webhookHandler.js`自体は薄いバレルファイルとして残し、ディレクトリ化はしていない — `tests/server.test.js`が`mock.module('../src/webhookHandler.js', ...)`のように拡張子込みの文字列でモック対象を指定しており、同名ディレクトリではなくファイルとして存在している必要があるため
 
 ## 読み取り専用GraphQL API
 
@@ -91,9 +92,26 @@ type Query {
 │   ├── sheetsSyncHandler.js    # Sheets→DBの逆方向同期（/sheets-syncハンドラ）
 │   ├── migrateSheetsToDb.js    # 初回移行用の一括移行スクリプト
 │   ├── quickInput.js           # クイック入力パーサー
-│   ├── flexBuilders.js         # LINE Flex Message構築
+│   ├── flexBuilders.js         # LINE Flex Message構築（画面単位でflex/へ分割、公開APIをまとめるバレル）
+│   ├── flex/
+│   │   ├── core.js             # buildFlexMessage/buildToast/buildEmpty等の共通ヘルパー
+│   │   ├── menu.js             # アイドルメニュー
+│   │   ├── addFlow.js          # 追加フロー
+│   │   ├── monthFlow.js        # ステータス変更・月選択・月次一覧・サマリー
+│   │   ├── editFlow.js         # 編集フロー
+│   │   ├── deleteFlow.js       # 削除フロー
+│   │   ├── guide.js            # クイック入力ガイド
+│   │   └── reminder.js         # 月初リマインドのカルーセル
 │   ├── lineService.js          # LINE APIクライアント・署名検証middleware
-│   ├── webhookHandler.js       # イベントルーティング・全ステップフロー
+│   ├── webhookHandler.js       # イベント受付・エラーハンドリング（フロー単位でwebhook/へ分割、バレル）
+│   ├── webhook/
+│   │   ├── postbackRouter.js   # Postbackルーティング・ステップハンドラーテーブル
+│   │   ├── messageRouter.js    # テキストメッセージのキーワードルーティング
+│   │   ├── addFlow.js          # 追加フローのステップハンドラー
+│   │   ├── monthFlow.js        # 月選択・handleShowMonth
+│   │   ├── deleteFlow.js       # 削除フローのステップハンドラー
+│   │   ├── editFlow.js         # 編集フローのステップハンドラー・saveEdit
+│   │   └── settlementNotify.js # 精算完了通知
 │   ├── state.js                # 会話状態管理（メモリ内Map）
 │   ├── errors.js                # カスタムエラークラス
 │   ├── utils.js                 # 日付/金額フォーマット・精算計算
