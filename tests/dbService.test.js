@@ -1,6 +1,9 @@
 // @ts-nocheck -- TODO(TS移行): 段階的TypeScript導入の対象外。個別に型を付けて解除する予定
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('fs');
+const os = require('os');
+const path = require('path');
 const { createDbService } = require('../src/dbService');
 
 function freshDb() {
@@ -112,4 +115,39 @@ test('upsertUser: userIdが空ならno-op', () => {
   const db = freshDb();
   db.upsertUser('', '2026-07-30 10:00:00');
   assert.deepEqual(db.getAllUserIds(), []);
+});
+
+test('createDbService: :memory:以外を指定するとディレクトリを作成し、ファイルDBが使える', () => {
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'kakeibo-dbtest-'));
+  const dbFilePath = path.join(tmpDir, 'nested', 'kakeibo.db');
+  const db = createDbService(dbFilePath);
+  try {
+    assert.doesNotThrow(() => db.insertEntry({ date: '2026-07-10', subject: 'x', price: 100, payer: 'c' }));
+    assert.ok(fs.existsSync(dbFilePath));
+  } finally {
+    db.close();
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+  }
+});
+
+test('backupTo: 指定パスへバックアップファイルを作成する', async () => {
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'kakeibo-backuptest-'));
+  const db = createDbService(':memory:');
+  db.insertEntry({ date: '2026-07-10', subject: 'x', price: 100, payer: 'c' });
+
+  const destPath = path.join(tmpDir, 'backup', 'kakeibo-backup.db');
+  try {
+    await db.backupTo(destPath);
+    assert.ok(fs.existsSync(destPath));
+  } finally {
+    db.close();
+    fs.rmSync(tmpDir, { recursive: true, force: true });
+  }
+});
+
+test('close: 呼び出し後に再度DB操作しようとするとエラーになる', () => {
+  const db = freshDb();
+  db.insertEntry({ date: '2026-07-10', subject: 'x', price: 100, payer: 'c' });
+  db.close();
+  assert.throws(() => db.getMonthlyEntries('2026-07'));
 });

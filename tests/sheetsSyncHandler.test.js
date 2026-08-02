@@ -21,6 +21,12 @@ function resetAll() {
   dbMocks.insertEntry.mock.resetCalls();
 }
 
+test('bodyがオブジェクトでない場合はValidationError', () => {
+  resetAll();
+  assert.throws(() => handleSheetsSyncRequest(null), ValidationError);
+  assert.throws(() => handleSheetsSyncRequest('not-an-object'), ValidationError);
+});
+
 test('type=statusでdb.setMonthlyStatusが呼ばれる', () => {
   resetAll();
   const result = handleSheetsSyncRequest({ type: 'status', ym: '2026-07', status: '確定済' });

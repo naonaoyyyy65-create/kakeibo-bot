@@ -25,6 +25,21 @@ test('月/日を指定した日付', () => {
   assert.match(r.date, /-01-10$/);
 });
 
+test('月/日が今年ではまだ来ていない日付なら前年の日付として解釈される', () => {
+  // 常に「今日の翌日」を対象にする（同一年内なら未来日、年末年始をまたぐ場合のみ翌年1/1が
+  // 「今年の1/1」＝過去日と解釈され本テストの前提が崩れるが、発生は年1日のみのため許容する）。
+  const now = new Date();
+  const tomorrow = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+  const mm = tomorrow.getMonth() + 1;
+  const dd = tomorrow.getDate();
+
+  const r = parseQuickInput(`${mm}/${dd} カフェ 800 a`);
+  const [y, m, d] = r.date.split('-').map(Number);
+  assert.equal(y, now.getFullYear() - 1);
+  assert.equal(m, mm);
+  assert.equal(d, dd);
+});
+
 test('相対日付（昨日）', () => {
   const r = parseQuickInput('昨日 ランチ 1200 c');
   const expected = new Date();

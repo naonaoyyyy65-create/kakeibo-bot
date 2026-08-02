@@ -31,3 +31,11 @@ test('addSettledMonths: 空配列を渡しても何も起きない（ファイ�
   store.addSettledMonths([]);
   assert.equal(fs.existsSync(filePath), false);
 });
+
+test('getSettledMonths: ファイルはあるがsettledMonthsが配列でない（手動編集等で破損）場合は空配列にフォールバックする', () => {
+  const filePath = tempStorePath();
+  fs.writeFileSync(filePath, JSON.stringify({ settledMonths: 'not-an-array' }), 'utf8');
+  const store = createStore(filePath);
+  assert.deepEqual(store.getSettledMonths(), []);
+  fs.unlinkSync(filePath);
+});

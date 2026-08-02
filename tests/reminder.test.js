@@ -78,6 +78,7 @@ mock.module('../src/reminderStore.js', {
 
 const { evaluateMonth, checkMonthStatus, collectUnpaidMonths, monthlyReminder } = require('../src/reminder');
 const config = require('../src/config');
+const flexBuilders = require('../src/flexBuilders');
 
 test('evaluateMonth: ステータス未設定はneedsReminder=true（NEED_INPUT）', () => {
   const result = evaluateMonth('2026-04', [['2026/04/01', 'スーパー', 1000, 'c']], '');
@@ -182,6 +183,14 @@ test('monthlyReminder: 送信先が0件なら何もせず（例外を投げず�
   } finally {
     config.NOTIFY_USER_IDS.push(...original);
   }
+});
+
+test('monthlyReminder: buildReminderMessageがnullを返す場合は送信せず終了する（通常のevaluateMonthロジックでは発生しないが、防御的分岐として存在するため直接検証）', async (t) => {
+  settledMonths = [];
+  pushedTo.length = 0;
+  t.mock.method(flexBuilders, 'buildReminderMessage', () => null);
+  await assert.doesNotReject(monthlyReminder(true));
+  assert.deepEqual(pushedTo, []);
 });
 
 test('monthlyReminder: 対象月が無ければ何もせず終了する', async () => {

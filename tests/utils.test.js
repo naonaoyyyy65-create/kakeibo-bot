@@ -87,3 +87,8 @@ test('formatInTZ: dパターンは日を先頭ゼロなしで返す（第2月曜
   assert.equal(formatInTZ(new Date('2026-07-08T00:00:00+09:00'), 'd'), '8');
   assert.equal(formatInTZ(new Date('2026-07-01T00:00:00+09:00'), 'd'), '1');
 });
+
+test('formatInTZ: 未知のパターンはyyyy-MM-ddと同じ既定形式にフォールバックする', () => {
+  const date = new Date('2026-07-08T00:00:00+09:00');
+  assert.equal(formatInTZ(date, 'unknown-pattern'), formatInTZ(date, 'yyyy-MM-dd'));
+});
