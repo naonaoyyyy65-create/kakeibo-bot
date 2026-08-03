@@ -1,7 +1,6 @@
 # kakeibo-bot
 
-<!-- リポジトリ作成後、YOUR_GITHUB_USERNAME を実際のGitHubユーザー名に置き換えてください -->
-![CI](https://github.com/YOUR_GITHUB_USERNAME/kakeibo-bot/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/naonaoyyyy65-create/kakeibo-bot/actions/workflows/ci.yml/badge.svg)
 ![tests](https://img.shields.io/badge/tests-118%20passing-brightgreen)
 ![coverage](https://img.shields.io/badge/coverage-80.30%25-yellow)
 ![graphql](https://img.shields.io/badge/GraphQL-read--only%20API-e10098.svg)
